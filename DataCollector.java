@@ -9,13 +9,14 @@ import org.json.simple.parser.JSONParser;
 
 class DataCollector
 {
-
+// delete this empty line
    public static void main(String[] args) throws Exception 
    {
 	   String toWrite;
 	   String text="";
 	   FileWriter fw = new FileWriter("cricket.csv");
   	   toWrite ="innings,over,Bowlername,Batsmanname,runs,wicket,description,nh/h,wickettype,wickethelper,extras,ballspeed(kph)";
+	   // Look at how to write entire string to file instead of one character at a time
 	   for (int j = 0; j < toWrite.length(); j++) 
 	   {
 	       fw.write(toWrite.charAt(j));
@@ -23,7 +24,7 @@ class DataCollector
 	   fw.write('\n');
 	   for(int innings=0;innings<2;innings++)
 	   {
-		   for(int page=0;page<15;page++)
+		   for(int page=0;page<15;page++) // use pageCount instead of an arbitary number like 15. 
 		   {
 			   text="";
 			   URL url = new URL("http://site.web.api.espn.com/apis/site/v2/sports/cricket/18902/playbyplay?contentorigin=espn&event=1157755&page="+(page+1)+"&period="+(innings+1)+"&section=cricinfo");
@@ -31,7 +32,7 @@ class DataCollector
 			   connection.setRequestMethod("GET");
 			   connection.connect();
 			   Scanner sc = new Scanner(url.openStream());
-				   while(sc.hasNext())
+				   while(sc.hasNext()) // adjust indent
 				   {
 					   text=text+sc.nextLine();
 				   }
@@ -46,7 +47,7 @@ class DataCollector
 		         for(int i=0;i<items.size();i++)
 		         {
 		        	 toWrite="";
-		        	 JSONObject jo2=(JSONObject) items.get(i);
+		        	 JSONObject jo2=(JSONObject) items.get(i); // use proper names instead of "jo"
 		        	 JSONObject jo3=(JSONObject) jo2.get("batsman");
 		        	 JSONObject jo4=(JSONObject) jo3.get("athlete");
 		        	 JSONObject jo5=(JSONObject) jo2.get("bowler");
@@ -55,7 +56,7 @@ class DataCollector
 		        	 JSONObject jo8=(JSONObject) jo2.get("over");
 		        	 JSONObject jo9=(JSONObject) jo2.get("playType");
 		        	 
-			        	 if(jo6.toString().equals("{}"))
+			        	 if(jo6.toString().equals("{}")) // Check for notEquals
 			        	 {}
 			        	 else
 			        	 {
@@ -64,6 +65,7 @@ class DataCollector
 			             
 			             if(textString!=null)
 			             {
+					     // do not test for ',' character by character. Use string function in Java
 				             for(int j=0;j<textString.length();j++)
 				             {
 				            	 if(textString.charAt(j)!=',')
@@ -118,7 +120,7 @@ class DataCollector
 			        	 else
 			        	 {
 			        		 int flag=0;
-			        		 
+			        		 // do this: comment tring to retrieve bowler name, batsman name
 			        		 if(jo7.get("type").equals("caught"))
 			        		 {
 			        			   JSONArray jo10=(JSONArray) jo2.get("athletesInvolved");
